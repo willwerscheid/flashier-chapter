@@ -7,7 +7,7 @@ if (exists("test") && test) {
   ns <- c(100, 200, 500, 1000, 2000, 5000, 10000)
   k <- 10
 }
-cat("Running flashier with misspecified noise models:", ntrials, "trials...\n\n")
+cat("\nRunning flashier with misspecified noise models:", ntrials, "trials...\n\n")
 
 
 # simulation hyperparameters
@@ -56,23 +56,23 @@ for (trial in 1:ntrials) {
     }
 
     Y_norm <- tcrossprod(LL, FF) + s2_resid_sd * rnorm(n * p)
-    fl_norm <- flash(Y_norm) %>%
-      flash.add.greedy(extrapolate = FALSE, verbose.lvl = 0)
+    fl_norm <- flash.init(Y_norm) %>%
+      flash.add.greedy(Kmax = 100, extrapolate = FALSE, verbose.lvl = 0)
     nfactors[[1]][trial, which(ns == n)] <- fl_norm$n.factors
 
     Y_t5 <- tcrossprod(LL, FF) + s2_resid_sd * rt(n * p, df = 5)
-    fl_t5 <- flash(Y_t5) %>%
-      flash.add.greedy(extrapolate = FALSE, verbose.lvl = 0)
+    fl_t5 <- flash.init(Y_t5) %>%
+      flash.add.greedy(Kmax = 100, extrapolate = FALSE, verbose.lvl = 0)
     nfactors[[2]][trial, which(ns == n)] <- fl_t5$n.factors
 
     Y_pois <- matrix(log1p(rpois(n * p, exp(tcrossprod(LL, FF)))), nrow = n, ncol = p)
-    fl_pois <- flash(Y_pois) %>%
-      flash.add.greedy(extrapolate = FALSE, verbose.lvl = 0)
+    fl_pois <- flash.init(Y_pois) %>%
+      flash.add.greedy(Kmax = 100, extrapolate = FALSE, verbose.lvl = 0)
     nfactors[[3]][trial, which(ns == n)] <- fl_pois$n.factors
 
     Y_poisln <- matrix(log1p(rpois(n * p, exp(Y_norm))), nrow = n, ncol = p)
-    fl_poisln <- flash(Y_poisln) %>%
-      flash.add.greedy(extrapolate = FALSE, verbose.lvl = 0)
+    fl_poisln <- flash.init(Y_poisln) %>%
+      flash.add.greedy(Kmax = 100, extrapolate = FALSE, verbose.lvl = 0)
     nfactors[[4]][trial, which(ns == n)] <- fl_poisln$n.factors
   }
 }

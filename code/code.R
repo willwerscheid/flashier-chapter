@@ -23,6 +23,7 @@ library(ebnm)
 library(flashier)
 library(Matrix)
 library(xtable)
+library(gt)
 
 
 # Output:
@@ -35,7 +36,6 @@ if (!("no-output" %in% args)) {
   source("./benchmark_greedy.R")
   source("./benchmark_bf.R")
   source("./benchmark_init.R")
-  source("./scRNA_fit_times.R")
 
   setwd("../")
 }
@@ -63,7 +63,11 @@ if (!("no-output" %in% args)) {
 if (!("no-figs" %in% args)) {
   cat("\nGenerating figures...\n\n")
 
-  setwd("./make_figs/")
+  setwd("./make_output/")
+
+  source("./scRNA_fit_times.R")
+
+  setwd("../make_figs/")
 
   source("./benchmark_figs.R")
   source("./misspec_noise_fig.R")

@@ -65,13 +65,13 @@ montoro.genemap <- readRDS("../../output/montoro_genemap.rds")
 
 montoro.tib <- tibble(
   SYMBOL = names(ionocyte.pm),
-  pm = -ionocyte.pm, # Need to flip loadings
+  pm = ionocyte.pm,
   z = ionocyte.z
 ) %>%
   left_join(montoro.genemap) %>%
   mutate(exprmean = log10(exprmean))
 
 montoro.tib <- montoro.tib %>%
-  mutate(SYMBOL = ifelse(z < 30 & pm < 0.1, "", SYMBOL))
+  mutate(SYMBOL = ifelse(z < 35 & pm < 0.1, "", SYMBOL))
 
 do.volcano.plot(montoro.tib, "ionocyte")

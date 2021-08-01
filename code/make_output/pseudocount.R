@@ -1,8 +1,10 @@
-cat("Running pseudocount experiments...\n\n")
+cat("\nRunning pseudocount experiments...\n\n")
 if (exists("test") && test) {
   Kmax <- 1
+  pseudocounts <- 2^seq(-2, 0, by = 2)
 } else {
   Kmax <- 20
+  pseudocounts <- 2^seq(-4, 6, by = 0.5)
 }
 
 # Assumes rows are cells and cols are genes:
@@ -52,15 +54,15 @@ llik.idd <- function(dat, fl, size.factors, pseudocount) {
 }
 
 do.fit <- function(dat, size.factors, pseudocount, Kmax = 30) {
-  cat("  Fitting Pseudocount:", as.character(pseudocount), "\n")
+  cat("    Fitting Pseudocount:", as.character(pseudocount), "\n")
 
   fl <- flash.init(log1p(dat / pseudocount), var.type = 2) %>%
-    flash.add.greedy(Kmax = Kmax, verbose.lvl = 1, extrapolate = FALSE) # %>%
+    flash.add.greedy(Kmax = Kmax, verbose.lvl = 0, extrapolate = FALSE) # %>%
     # flash.backfit(verbose.lvl = 3)
 
   fl$adj.elbo <- adj.elbo(dat, fl, pseudocount)
 
-  cat("  Calculating IDD log likelihood...\n")
+  cat("    Calculating IDD log likelihood...\n")
 
   fl$llik.idd <- llik.idd(dat, fl, size.factors, pseudocount)
   fl$elbo.idd <- fl$llik.idd + sum(fl$flash.fit$KL[[1]]) + sum(fl$flash.fit$KL[[2]])
@@ -72,9 +74,7 @@ do.fit <- function(dat, size.factors, pseudocount, Kmax = 30) {
 }
 
 
-pseudocounts <- 2^seq(-4, 6, by = 0.5)
-
-
+cat("  PBMCs data...\n")
 pbmc <- t(readRDS("../../data/pbmc.rds"))
 pbmc.pp <- preprocess(pbmc)
 pbmc.res <- list()
@@ -89,6 +89,7 @@ rm(pbmc.pp)
 saveRDS(pbmc.res, "../../output/pseudocount_pbmc_greedy.rds")
 
 
+cat("  Montoro data...\n")
 trachea <- t(Matrix(readRDS("../../data/trachea.rds")))
 trachea.pp <- preprocess(trachea)
 trachea.res <- list()

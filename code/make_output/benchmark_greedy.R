@@ -1,3 +1,5 @@
+cat("\nBenchmarking greedy fits...\n\n")
+
 if (exists("test") && test) {
   Kmax <- 2
 } else {
@@ -51,7 +53,7 @@ parse.timing.res <- function(interval, is.flashr) {
         bind_rows(next.tbl)
     }
   } else {
-    tib <- read_tsv("Output.out")
+    tib <- read_tsv("Output.out", show_col_types = FALSE)
 
     tib <- tib %>%
       select(Iter, Obj, Factor) %>%
@@ -159,10 +161,11 @@ do.all.timings <- function(dat, interval, Kmax) {
 }
 
 
+cat("  GTEx data...\n")
 dat <- readRDS("../../data/gtex.rds")
 gtex <- do.all.timings(
   dat = dat,
-  interval = .01,
+  interval = .002,
   Kmax = Kmax
 )
 
@@ -170,6 +173,7 @@ all.res <- gtex %>% add_column(Dataset = "GTEx")
 
 
 if (!exists("test") || !test) {
+  cat("  PBMCs data...\n")
   dat <- readRDS("../../data/pbmc.rds")
   dat <- as.matrix(log1p(dat))
   pbmc <- do.all.timings(
@@ -178,6 +182,7 @@ if (!exists("test") || !test) {
     Kmax = Kmax
   )
 
+  cat("  Montoro data...\n")
   dat <- readRDS("../../data/trachea.rds")
   dat <- log1p(dat)
   trachea <- do.all.timings(

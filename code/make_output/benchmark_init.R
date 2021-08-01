@@ -1,5 +1,7 @@
+cat("\nBenchmarking initialization...\n\n")
+
 if (exists("test") && test) {
-  Kmax <- 2
+  Kmax <- 1
 } else {
   Kmax <- 10
 }
@@ -35,7 +37,7 @@ parse.timing.res <- function(interval) {
 }
 
 do.timing <- function(init.fn, dat, interval, Kmax, method.name, any.na = FALSE) {
-  cat(method.name, "\n")
+  cat("    Method:", method.name, "\n")
 
   tol <- sqrt(.Machine$double.eps) * prod(dim(dat))
   maxiter <- 100
@@ -71,6 +73,7 @@ do.all.timings <- function(dat, interval, Kmax) {
   set.seed(666)
   is.missing <- sample(1:length(dat), ceiling(.2 * length(dat)))
 
+  cat("  Missing data tests...\n")
   dat <- as.matrix(dat)
   dat[is.missing] <- NA
 
@@ -86,6 +89,7 @@ do.all.timings <- function(dat, interval, Kmax) {
 }
 
 
+cat("  PBMCs data...\n")
 dat <- readRDS("../../data/pbmc.rds")
 dat <- as.matrix(log1p(dat))
 pbmc <- do.all.timings(
@@ -94,20 +98,26 @@ pbmc <- do.all.timings(
   Kmax = Kmax
 )
 
-dat <- readRDS("../../data/trachea.rds")
-dat <- log1p(dat)
-trachea <- do.all.timings(
-  dat = dat,
-  interval = .025,
-  Kmax = Kmax
-)
+all.res <- pbmc %>% add_column(Dataset = "PBMC")
+
+
+if (!exists("test") || !test) {
+  cat("  Montoro data...\n")
+  dat <- readRDS("../../data/trachea.rds")
+  dat <- log1p(dat)
+  trachea <- do.all.timings(
+    dat = dat,
+    interval = .025,
+    Kmax = Kmax
+  )
+
+  all.res <- all.res %>%
+    bind_rows(
+      trachea %>% add_column(Dataset = "Montoro")
+    )
+}
 
 rm(dat)
 
-
-all.res <- pbmc %>% add_column(Dataset = "PBMC") %>%
-  bind_rows(
-    trachea %>% add_column(Dataset = "Montoro")
-  )
 
 saveRDS(all.res, "../../output/res_init.rds")

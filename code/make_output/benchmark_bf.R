@@ -1,3 +1,5 @@
+cat("\nBenchmarking backfits...\n\n")
+
 if (exists("test") && test) {
   K <- 2
 } else {
@@ -6,7 +8,9 @@ if (exists("test") && test) {
 
 parse.timing.res <- function(is.flashr, elapsed.t) {
   if (is.flashr) {
-    tib <- read_table("Output.out", skip = 1) %>%
+    tib <- read_table("Output.out", skip = 2, col_names = c(
+      "Iteration", "Objective", "Obj Diff"
+    ), col_types = "ddc") %>%
       mutate(Timestamp = elapsed.t * Iteration / max(Iteration)) %>%
       rename(Obj = Objective) %>%
       select(Iteration, Obj, Timestamp) %>%
@@ -14,7 +18,7 @@ parse.timing.res <- function(is.flashr, elapsed.t) {
   } else {
     tib <- read_tsv("Output.out", col_names = c(
       "Type", "Factor", "Iteration", "Obj", "Timestamp"
-    ))
+    ), show_col_types = FALSE)
 
     tib <- tib %>%
       select(Iteration, Obj, Timestamp) %>%
@@ -119,6 +123,7 @@ do.all.timings <- function(dat, K) {
 }
 
 
+cat("  GTEx data...\n")
 dat <- readRDS("../../data/gtex.rds")
 gtex <- do.all.timings(
   dat = dat,
@@ -129,6 +134,7 @@ all.res <- gtex %>% add_column(Dataset = "GTEx")
 
 
 if (!exists("test") || !test) {
+  cat("  PBMCs data...\n")
   dat <- readRDS("../../data/pbmc.rds")
   dat <- as.matrix(log1p(dat))
   pbmc <- do.all.timings(
@@ -136,6 +142,7 @@ if (!exists("test") || !test) {
     K = K
   )
 
+  cat("  Montoro data...\n")
   dat <- readRDS("../../data/trachea.rds")
   dat <- log1p(dat)
   trachea <- do.all.timings(

@@ -1,6 +1,7 @@
 plot.factors <- function(res,
                          dataset_name,
                          cell.types,
+                         genemap,
                          max.pt.size = 2) {
   tib <- res$res %>%
     mutate(Cell.type = rep(cell.types, length.out = nrow(res$res)))
@@ -46,18 +47,52 @@ plot.factors <- function(res,
     mutate(Method = factor(Method, levels = unique(res$res$Method)))
 
   plt <- ggplot(tib, aes(x = Factor_order, y = Loading, color = Cell.type)) +
-    geom_jitter(position = position_jitter(0.4),
+    geom_jitter(position = position_jitter(width = 0.4, height = 0),
                 size = tib$Pt.size) +
-    labs(x = NULL) +
+    scale_x_continuous(breaks = seq(from = 2, to = max(tib$Factor_order), by = 2)) +
     scale_color_brewer(palette = "Set3") +
-    labs(x = "", y = "", color = "Cell Type") +
+    labs(x = "factor index", y = "factor loading", color = "Cell Type") +
     theme_minimal() +
-    theme(axis.text.x = element_blank()) +
     facet_wrap(~Method, ncol = 1, scales = "free_y")
 
   ggsave(paste0("../../figs/", dataset_name, "_factors.png"), plot = plt, width = 8, height = 10.5)
 
-  return(plt)
+  z.scores <- abs(res$flashier.fit$loadings.pm[[1]] / res$flashier.fit$loadings.psd[[1]])
+  top.genes <- apply(z.scores, 2, function(k) {
+    rownames(res$flashier.fit$loadings.pm[[1]])[order(k, decreasing = TRUE)[1:10]]
+  })
+  colnames(top.genes) <- paste0("k=", formatC(1:ncol(top.genes), width = 2, flag = "0"))
+  if (dataset_name == "pbmc") {
+    genes.tib <- as_tibble(top.genes) %>%
+      pivot_longer(cols = everything(), names_to = "Factor", values_to = "ENSEMBL") %>%
+      left_join(genemap) %>%
+      filter(!is.na(SYMBOL)) %>%
+      select(Factor, SYMBOL)
+  } else {
+    genes.tib <- as_tibble(top.genes) %>%
+      pivot_longer(cols = everything(), names_to = "Factor", values_to = "SYMBOL")
+  }
+  genes.tib <- genes.tib %>%
+    group_by(Factor) %>%
+    summarize(TopGenes = paste(SYMBOL, collapse = ", ")) %>%
+    left_join(factor.tib %>% filter(Method == "flashier.snn")) %>%
+    select(Factor_order, TopGenes) %>%
+    arrange(Factor_order)
+
+  tbl <- genes.tib %>%
+    gt() %>%
+    cols_label(Factor_order = "Factor", TopGenes = "Top Genes (by |z|-score)") %>%
+    cols_align("left", columns = Factor_order) %>%
+    cols_align("left", columns = TopGenes) %>%
+    cols_width(
+      Factor_order ~ pct(10),
+      TopGenes ~ pct(90)
+    ) %>%
+    opt_row_striping()
+
+  gtsave(tbl, paste0("../../figs/topgenes_", dataset_name, ".png"), vwidth = 800, vheight = 50 * nrow(genes.tib))
+
+  return(NULL)
 }
 
 plot.t <- function(res,
@@ -79,7 +114,8 @@ pbmc.libsize <- colSums(pbmc)
 rm(pbmc)
 
 pbmc.res <- readRDS("../../output/pbmc_res.rds")
-plt <- plot.factors(pbmc.res, "pbmc", pbmc.celltype)
+pbmc.genemap <- readRDS("../../output/pbmc_genemap.rds")
+plt <- plot.factors(pbmc.res, "pbmc", pbmc.celltype, pbmc.genemap)
 
 
 montoro <- readRDS("../../data/sp_trachea.rds")
@@ -90,7 +126,8 @@ montoro.libsize <- colSums(montoro)
 rm(montoro)
 
 montoro.res <- readRDS("../../output/montoro_res.rds")
-plt <- plot.factors(montoro.res, "montoro", montoro.celltype)
+montoro.genemap <- readRDS("../../output/montoro_genemap.rds")
+plt <- plot.factors(montoro.res, "montoro", montoro.celltype, montoro.genemap)
 
 
 # plot.umaps <- function(res,

@@ -1,6 +1,3 @@
-pbmc <- readRDS("../../output/pseudocount_pbmc_greedy.rds")
-montoro <- readRDS("../../output/pseudocount_trachea_greedy.rds")
-
 dat_to_tib <- function(dat) {
   pc <- as.numeric(names(dat))
   elbo <- sapply(dat, `[[`, "elbo")
@@ -17,7 +14,10 @@ dat_to_tib <- function(dat) {
   return(tib)
 }
 
+pbmc <- readRDS("../../output/pseudocount_pbmc_greedy.rds")
 pbmc_tib <- dat_to_tib(pbmc)
+
+montoro <- readRDS("../../output/pseudocount_trachea_greedy.rds")
 montoro_tib <- dat_to_tib(montoro)
 
 tib <- pbmc_tib %>% add_column(Dataset = "PBMC-3k") %>%
