@@ -1,0 +1,234 @@
+
+Generating output...
+
+
+Running flashier with misspecified noise models: 10 trials...
+
+  Trial: 1 
+    n: 100 
+    n: 200 
+    n: 500 
+    n: 1000 
+    n: 2000 
+    n: 5000 
+    n: 10000 
+  Trial: 2 
+    n: 100 
+    n: 200 
+    n: 500 
+    n: 1000 
+    n: 2000 
+    n: 5000 
+    n: 10000 
+  Trial: 3 
+    n: 100 
+    n: 200 
+    n: 500 
+    n: 1000 
+    n: 2000 
+    n: 5000 
+    n: 10000 
+  Trial: 4 
+    n: 100 
+    n: 200 
+    n: 500 
+    n: 1000 
+    n: 2000 
+    n: 5000 
+    n: 10000 
+  Trial: 5 
+    n: 100 
+    n: 200 
+    n: 500 
+    n: 1000 
+    n: 2000 
+    n: 5000 
+    n: 10000 
+  Trial: 6 
+    n: 100 
+    n: 200 
+    n: 500 
+    n: 1000 
+    n: 2000 
+    n: 5000 
+    n: 10000 
+  Trial: 7 
+    n: 100 
+    n: 200 
+    n: 500 
+    n: 1000 
+    n: 2000 
+    n: 5000 
+    n: 10000 
+  Trial: 8 
+    n: 100 
+    n: 200 
+    n: 500 
+    n: 1000 
+    n: 2000 
+    n: 5000 
+    n: 10000 
+  Trial: 9 
+    n: 100 
+    n: 200 
+    n: 500 
+    n: 1000 
+    n: 2000 
+    n: 5000 
+    n: 10000 
+  Trial: 10 
+    n: 100 
+    n: 200 
+    n: 500 
+    n: 1000 
+    n: 2000 
+    n: 5000 
+    n: 10000 
+
+Running pseudocount experiments...
+
+  PBMCs data...
+    Fitting Pseudocount: 0.0625 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 0.0883883476483184 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 0.125 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 0.176776695296637 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 0.25 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 0.353553390593274 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 0.5 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 0.707106781186548 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 1 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 1.4142135623731 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 2 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 2.82842712474619 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 4 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 5.65685424949238 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 8 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 11.3137084989848 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 16 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 22.6274169979695 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 32 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 45.254833995939 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 64 
+    Calculating IDD log likelihood...
+  Montoro data...
+    Fitting Pseudocount: 0.0625 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 0.0883883476483184 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 0.125 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 0.176776695296637 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 0.25 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 0.353553390593274 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 0.5 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 0.707106781186548 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 1 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 1.4142135623731 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 2 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 2.82842712474619 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 4 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 5.65685424949238 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 8 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 11.3137084989848 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 16 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 22.6274169979695 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 32 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 45.254833995939 
+    Calculating IDD log likelihood...
+    Fitting Pseudocount: 64 
+    Calculating IDD log likelihood...
+Warning message:
+In report.maxiter.reached(verbose.lvl) :
+  Maximum number of iterations reached.
+
+Generating figures...
+
+`summarise()` has grouped output by 'Dataset', 'Method'. You can override using the `.groups` argument.
+`summarise()` has grouped output by 'Method'. You can override using the `.groups` argument.
+Joining, by = "ENSEMBL"
+Joining, by = "Factor"
+`summarise()` has grouped output by 'Method'. You can override using the `.groups` argument.
+Joining, by = "Factor"
+Joining, by = "ENSEMBL"
+Joining, by = "SYMBOL"
+Warning message:
+ggrepel: 3 unlabeled data points (too many overlaps). Consider increasing max.overlaps 
+
+
+R version 3.5.3 (2019-03-11)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS Mojave 10.14.6
+
+Matrix products: default
+BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] grid      stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+ [1] gt_0.3.0        xtable_1.8-4    Matrix_1.3-4    flashier_0.2.9 
+ [5] ebnm_0.1-44     gridExtra_2.3   ggrepel_0.9.1   forcats_0.5.1  
+ [9] stringr_1.4.0   dplyr_1.0.7     purrr_0.3.4     readr_2.0.0    
+[13] tidyr_1.1.3     tibble_3.1.2    ggplot2_3.3.3   tidyverse_1.3.1
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.2         sass_0.4.0         bit64_0.9-7        vroom_1.5.3       
+ [5] jsonlite_1.7.2     splines_3.5.3      modelr_0.1.8       assertthat_0.2.1  
+ [9] horseshoe_0.2.0    mixsqp_0.3-43      deconvolveR_1.2-1  cellranger_1.1.0  
+[13] pillar_1.6.1       backports_1.1.3    lattice_0.20-38    glue_1.4.2        
+[17] digest_0.6.18      checkmate_2.0.0    RColorBrewer_1.1-2 rvest_1.0.0       
+[21] colorspace_1.4-1   htmltools_0.5.1.1  plyr_1.8.4         pkgconfig_2.0.2   
+[25] invgamma_1.1       broom_0.7.6        haven_2.3.1        webshot_0.5.2     
+[29] scales_1.1.1       processx_3.5.2     tzdb_0.1.1         farver_2.1.0      
+[33] generics_0.0.2     ellipsis_0.3.2     withr_2.4.2        ashr_2.2-51       
+[37] cli_3.0.1          magrittr_2.0.1     crayon_1.4.1       readxl_1.3.1      
+[41] ps_1.5.0           fs_1.5.0           fansi_0.4.0        xml2_1.3.2        
+[45] truncnorm_1.0-8    tools_3.5.3        hms_1.1.0          softImpute_1.4    
+[49] REBayes_2.2        lifecycle_1.0.0    trust_0.1-8        munsell_0.5.0     
+[53] reprex_2.0.0       irlba_2.3.3        callr_3.7.0        compiler_3.5.3    
+[57] rlang_0.4.10       rstudioapi_0.13    rappdirs_0.3.1     labeling_0.3      
+[61] gtable_0.3.0       DBI_1.0.0          reshape2_1.4.3     flashr_0.6-7      
+[65] R6_2.4.0           lubridate_1.7.10   bit_1.1-14         utf8_1.1.4        
+[69] stringi_1.4.3      parallel_3.5.3     SQUAREM_2021.1     Rcpp_1.0.6        
+[73] vctrs_0.3.8        dbplyr_2.1.1       tidyselect_1.1.0  
